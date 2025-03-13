@@ -1,0 +1,67 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/admin">Quiz Master</a>
+
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+                <a class="nav-link active" href="/create_question/{{quiz.id}}"><i class="bi bi-plus-square-fill"></i> Question</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+</nav>
+ 
+<div class="'container">
+    <div class="row">
+        <div class="col-md-10">
+            <a href="/view_chapter/{{quiz.chapter_id}}" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i> Back to quizes</a>
+            <h3 class="text-center"> Admin Dashboard</h3>
+            <h4>Quiz : {{ quiz.name }}</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Option 1</th>
+                        <th>Option 2</th>
+                        <th>Option 3</th>
+                        <th>Option 4</th>
+                        <th>Correct Answer</th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for question in questions %}
+                    <tr>
+                        <td>{{ question.question_statement }}</td>
+                        <td>{{ question.option1 }}</td>
+                        <td>{{ question.option2 }}</td>
+                        <td>{{ question.option3}}</td>
+                        <td>{{ question.option4}}</td>
+                        <td>{{ question.answer}}</td>
+
+                        <td>
+                            <a href="/edit_question/{{ question.id }}" class="btn btn-info"><i class="bi bi-pen-fill"></i></a> |
+                            <a href="/delete_question/{{ question.id }}"class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

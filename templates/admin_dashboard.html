@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div>
+                <a class="navbar-brand" href="/admin">Quiz Master</a>
+              
+                <p class="text-light ms-2" style="font-size: 0.9rem; margin-bottom: 0;">
+                      <strong> USER: {{ user.username }}</strong>
+                </p>
+                
+            </div>
+
+
+            <ul class="navbar-nav ml-auto ">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/create_subject"><i class="bi bi-plus-square-fill"></i> Subject</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                </li>
+                <form class="d-flex" role="search" method="get" action="/admin/search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin_summary"><i class="bi bi-bar-chart"></i> Admin Summary</a>
+                </li>
+            </ul>
+            
+
+        </div>
+    </nav>
+
+<div class="'container">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center">Admin Dashboard</h3>
+            <h4>Subjects</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Subject name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for subject in all_subjects %}
+                    <tr>
+                        <td>{{ subject.name }}</td>
+                        <td>{{ subject.description }}</td>
+                        <td>
+                            <a href="/edit_subject/{{ subject.id }}" class="btn btn-info"><i class="bi bi-pen-fill"></i></a> |
+                            <a href="/view_subject/{{ subject.id }}" class="btn btn-warning"><i class="bi bi-eye-fill"></i></a> |
+                            <a href="/delete_subject/{{ subject.id }}"class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">{{user.name}}</a>
+        
+        <ul class="navbar-nav ml-auto ">
+           
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+</nav>
+
+<div class="'container">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center">User History</h3>
+            <table class="table">
+    <thead>
+        <tr>
+            
+            <th scope="col">Quiz Name</th>
+            <th scope="col">Score</th>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Chapter</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for score in scores %}
+        <tr>
+            <td>{{ score.quiz_name.name }}</td>
+            <td>{{ score.score }}</td>
+            <td>{{ score.time_stamp }}</td>
+            <td>{{ score.quiz_name.chap_name.subject_name.name}}</td>
+            <td>{{ score.quiz_name.chap_name.name }}</td>
+            
+            
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/admin">Quiz Master</a>
+       
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+                <a class="nav-link active" href="/create_subject"><i class="bi bi-plus-square-fill"></i> Subject</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </li>
+            <form class="d-flex" role="search" method="get" action="/admin/search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+                <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </ul>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Admin Summary</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h3 class="text-primary">Users</h3>
+                <ul class="list-group list-group-flush">
+                    {% for user in users %}
+                        <li class="list-group-item">{{ user.username }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h3 class="text-success">Subjects</h3>
+                <ul class="list-group list-group-flush">
+                    {% for subject in subjects %}
+                        <li class="list-group-item">{{ subject.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h3 class="text-danger">Chapters</h3>
+                <ul class="list-group list-group-flush">
+                    {% for chapter in chapters %}
+                        <li class="list-group-item">{{ chapter.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   <div class="row my-4">
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h3 class="text-info">Month wise number of quizzes</h3>
+            <canvas id="monthWiseChart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h3 class="text-warning">Subject wise number of quizzes</h3>
+            <canvas id="subjectWiseChart" style="max-width: 300px; max-height: 300px; margin: 0 auto;"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h3 class="text-primary">Average Scores for Each Quiz</h3>
+            <canvas id="scoreChart" style="max-width: 300px; max-height: 300px; margin: 0 auto;"></canvas>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const monthData = JSON.parse('{{ month_data | tojson | default("[]") }}');
+    const subjectData = JSON.parse('{{ subject_data | tojson | default("[]") }}');
+    const scoreData = JSON.parse('{{ score_data | tojson | default("[]") }}');
+
+    // Month Wise Chart
+    new Chart(document.getElementById('monthWiseChart'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(monthData),
+            datasets: [{
+                label: 'Number of Quizzes',
+                data: Object.values(monthData),
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true, position: 'top' }
+            }
+        }
+    });
+    // Quiz Scores Chart
+new Chart(document.getElementById('quizScoreChart'), {
+    type: 'bar',
+    data: {
+        labels: Object.keys(scoreData),
+        datasets: [{
+            label: 'Average Score (%)',
+            data: Object.values(scoreData),
+            backgroundColor: 'rgba(72, 209, 204, 0.7)',
+            borderColor: 'rgba(72, 209, 204, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { display: true, position: 'top' }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100  // Ensures percentage scale
+            }
+        }
+    }
+});
+
+
+    // Subject Wise Chart
+    new Chart(document.getElementById('subjectWiseChart'), {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(subjectData),
+            datasets: [{
+                label: 'Number of Quizzes',
+                data: Object.values(subjectData),
+                backgroundColor: ['#4CAF50', '#FFC107', '#FF5722', '#03A9F4', '#E91E63'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true, position: 'top' }
+            }
+        }
+    });
+
+    // Quiz Scores Chart
+    new Chart(document.getElementById('scoreChart'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(scoreData),
+            datasets: [{
+                label: 'Average Score',
+                data: Object.values(scoreData),
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true, max: 100 }  // Assuming scores are out of 100
+            }
+        }
+    });
+</script>
+{% endblock %}

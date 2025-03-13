@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">{{user.name}}</a>
+        
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+                <a class="nav-link active" href="/dashboard/history"><i class="bi bi-clock-history"></i> History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+</nav>
+
+<div class="'container">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center">Quiz Dashboard</h3>
+            
+            <div class="card text-center">
+                <div class="card-header">
+                    Your Score
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">You score is {{score}} out of {{total}}</h5>
+                    
+                </div>
+            </div>
+
+           
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

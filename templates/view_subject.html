@@ -1,0 +1,61 @@
+    {% extends "index.html" %}
+
+    {% block content %}
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin">Quiz Master</a>
+           
+            <ul class="navbar-nav ml-auto ">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/create_chapter/{{subject.id}}"><i class="bi bi-plus-square-fill"></i> Chapter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                </li>
+
+
+            </ul>
+
+
+        </div>
+    </nav>
+
+    <div class="'container">
+        <div class="row">
+            <div class="col-md-10">
+                
+                <a href="/admin" class="btn btn-primary"> <i class="bi bi-arrow-left-square"></i> Back to Admin Dashboard</a>
+                <h3 class="text-center">Admin Dashboard</h3>
+                <h4>Chapters</h4>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Chapter name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for chapter in all_chapters %}
+                        <tr>
+                            <td>{{ chapter.name }}</td>
+                            <td>{{ chapter.description }}</td>
+                            <td>
+                                <a href="/edit_chapter/{{ chapter.id }}" class="btn btn-info"><i class="bi bi-pen-fill"></i></a> |
+                                <a href="/view_chapter/{{ chapter.id }}" class="btn btn-warning"><i class="bi bi-eye-fill"></i></a>|
+                                <a href="/delete_chapter/{{ chapter.id }}"class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

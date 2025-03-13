@@ -1,0 +1,85 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">{{user.username}}</a>
+        
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+                <a class="nav-link active" href="/user_dashboard/history"><i class="bi bi-clock-history"></i> History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+</nav>
+<div class="'container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="text-center d-flex justify-content-center mx-auto">Quiz Dashboard</h3>
+<!-- Quiz Details -->
+<p class="text-center">
+    {{ quiz.name }}     | Date: {{ quiz.date_of_quiz }}    |
+     Duration: {{ quiz.time_duration }} 
+</p>
+
+<!-- Questions -->
+<div class="container mt-4">
+    <div class="row">
+        <form action="/submit_quiz/{{quiz.id}}" method="post">
+            {% for question in questions %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ question.question_statement }}</h5>
+            
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option1" value="{{ question.option1 }}">
+                            <label class="form-check-label" for="q{{ question.id }}_option1">
+                                {{ question.option1 }}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option2" value="{{ question.option2 }}">
+                            <label class="form-check-label" for="q{{ question.id }}_option2">
+                                {{ question.option2 }}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option3" value="{{ question.option3 }}">
+                            <label class="form-check-label" for="q{{ question.id }}_option3">
+                                {{ question.option3 }}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option4" value="{{ question.option4 }}">
+                            <label class="form-check-label" for="q{{ question.id }}_option4">
+                                {{ question.option4 }}
+                            </label>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        
+        <div class="col-md-12 text-center">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check-fill"></i> Submit </button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

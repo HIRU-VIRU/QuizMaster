@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+<div class="container d-flex align-items-center justify-content-center" style="width: 400px">
+    <div id="login-box" class="text-center">
+
+        <form  action="/create_quiz/{{chapter_id}}" method="post">
+
+            
+
+            <div class="form-group mb-3">
+                <label for="name" class="text-info">quiz name</label>
+                <input type="name" name="name" id="name" class="form-control" required>
+            </div>
+            
+            <div class="form-group mb-3">   
+                <label for="date_of_quiz" class="text-info">Date of quiz</label>
+                <input type="date" name="date_of_quiz" id="date_of_quiz" class="form-control" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="time_duration" class="text-info">Duration in minutes</label>
+                <input type="time" name="time_duration" id="time_duration" class="form-control" required>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="remarks" class="text-info">Remarks</label>
+                <input type="remarks" name="remarks" id="remarks" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-info btn-md w-100">Create quiz</button>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}
